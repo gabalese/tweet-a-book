@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block Head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <title>{% block Title %}{% endblock %}</title>
+    {% endblock %}
+</head>
+<body>
+<div class="container">
+<div class="page-header">
+    {% block PageHeader %}
+        <h1>Tweet-A-Book
+            <small>A cute utility to find tweetable sentences inside an EPUB publication</small>
+        </h1>
+    {% endblock %}
+</div>
+    {% block Content %}
+    {% endblock %}
+</div>
+<footer>
+<div class="container">
+<hr>
+    {% block Footer %}
+        <p>© Gabriele Alese</p>
+    {% endblock %}
+</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,14 @@
+Flask==0.10.1
+Genshi==0.7
+Jinja2==2.7.1
+MarkupSafe==0.18
+Pygments==1.6
+Sphinx==1.1.3
+Werkzeug==0.9.4
+distribute==0.6.49
+docutils==0.11
+itsdangerous==0.23
+lxml==3.3.3
+nose==1.2.1
+wsgiref==0.1.2
+gunicorn==0.17.2
