@@ -95,7 +95,6 @@ class EPUB(zipfile.ZipFile):
         self.root_folder = os.path.dirname(self.opf_path)  # Used to compose absolute paths for reading in zip archive
         self.opf = Etree.fromstring(self.read(self.opf_path))  # OPF tree
 
-
         self.info = InfoDict({"metadata": Metadata(self.opf),
                               "manifest": [],
                               "spine": [],

@@ -1,13 +1,12 @@
 # coding=utf-8
-from flask import Flask, jsonify, request, render_template, make_response
 from StringIO import StringIO
 import datetime
-
 import urllib
+from flask import Flask, jsonify, request, render_template, make_response
 from markupsafe import Markup
 
-from gettweets import extract_tweets
 from src.epub import InvalidEpub, EPUB
+from src.functions import extract_tweets
 
 from xml.etree.ElementTree import ParseError
 

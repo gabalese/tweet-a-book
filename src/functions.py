@@ -1,15 +1,26 @@
 import re
-from settings import MAX_LENGHT, MIN_LENGHT
+import os
+
+# Basic settings for maximum and minimum lenght of a tweetable sentence.
+MAX_LENGHT = 140
+MIN_LENGHT = 100
 
 
 def html_to_text(data):
+    """
+    Thanks Tamim Shahriar
+    http://love-python.blogspot.it/2011/04/html-to-text-in-python.html
+
+    The present is a slight modified version of that script. LOTS of room for improvement,
+    but still functional (if you can't use a proper cleaner like the one in lxml.html).
+    """
 
     # replace consecutive spaces into a single one
     data = " ".join(data.split())
 
     # get only the body content
-    bodyPat = re.compile(r'<body[^<>]*?>(.*?)</body>', re.I)
-    result = re.findall(bodyPat, data)
+    bodypat = re.compile(r'<body[^<>]*?>(.*?)</body>', re.I)
+    result = re.findall(bodypat, data)
     data = result[0]
 
     # now remove the java script
@@ -32,6 +43,22 @@ def html_to_text(data):
 
 
 def tokenize(line):
+    """
+    Very basic regexp pattern to find "tweetable sentences".
+    The "sentence" is blatantly defined as "begins with a uppercase letter, goes on until the first full stop".
+    *Very* rough, but works. Breaks on acronyms and stuff.
+    """
     rephrase = re.compile(r'(?<!\w\s)[A-Z].{%d,%d}[!\?\.]' % (MIN_LENGHT, MAX_LENGHT))
     tokens = rephrase.findall(line)
     return tokens
+
+
+def extract_tweets(epubfile):
+    listtokens = []
+    for k in epubfile.manifest:
+        if k.attrib["media-type"] == "application/xhtml+xml":
+            plaintext = html_to_text(epubfile.read(os.path.join(os.path.dirname(epubfile.opf_path), k.attrib["href"])))
+            tokens = tokenize(plaintext)
+            if len(tokens) > 0:
+                listtokens.extend(tokens)
+    return listtokens
