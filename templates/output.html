@@ -1,14 +1,29 @@
 {% extends "meta.html" %}
-{% block Title %}Results{% endblock %}
+{% block Title %}Results for {{ title }}{% endblock %}
 {% block Content %}
-    <div class="row">
-    </div>
-    <div class="row">
-{% for tweet in tweets %}
-<p>{{ tweet.decode('UTF-8') }}<a
-        href="https://twitter.com/intent/tweet?text={{ '"'+tweet.decode('UTF-8')+'"' | urlencode }}"><img
-        src="https://dev.twitter.com/sites/default/files/images_documentation/bird_blue_16_1.png"/></a>
-</p>
-{% endfor %}
-    </div>
+    <p class="lead">
+        Found <strong>{{ tweets | length }}</strong> tweetable sentences in <em>{{ title }}</em>.
+    </p>
+    <table class="table">
+        {% for tweet in tweets %}
+        <tr>
+            <td>
+                <p>{{ tweet.decode('UTF-8') }}</p>
+            </td>
+            <td>
+                <a href="https://twitter.com/intent/tweet?text={{ '"'+tweet.decode('UTF-8')+'"' | urlencode }}">
+                <button>
+                <img src="https://dev.twitter.com/sites/default/files/images_documentation/bird_blue_16_1.png"/>
+                </button>
+                </a>
+            </td>
+        </tr>
+        {% else %}
+            <tr>
+            <td>
+                <p>No tweetable sentences found in {{ title }}</p>
+            </td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}

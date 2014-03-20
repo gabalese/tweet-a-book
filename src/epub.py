@@ -1,4 +1,5 @@
 import zipfile
+from zipfile import BadZipfile
 import os
 import uuid
 from StringIO import StringIO
@@ -64,7 +65,10 @@ class EPUB(zipfile.ZipFile):
             self.__init__read(initfile)
         else:  # retrocompatibility?
             try:
-                super(EPUB, self).__init__(filename, mode="r")
+                try:
+                    super(EPUB, self).__init__(filename, mode="r")
+                except BadZipfile:
+                    raise InvalidEpub
                 self.__init__read(filename)
             except ParseError:
                 raise InvalidEpub

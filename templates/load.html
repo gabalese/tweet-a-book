@@ -1,12 +1,16 @@
 {% extends 'meta.html' %}
 {% block Title %}File upload{% endblock %}
 {% block Content %}
-<form role="form" enctype="multipart/form-data" action="post" method="POST">
-    <div class="form-group">
-        <label for="epubfile">EPUB file</label>
-        <input type="file" name="epubfile">
-        <p class="help-block">Example block-level help text here.</p>
+<div class="col-sm-4">&nbsp;</div>
+    <div class="col-sm-4">
+        <form role="form" enctype="multipart/form-data" action="post" method="POST">
+            <div class="form-group">
+                <label for="epubfile">Select an EPUB file:</label>
+                <input type="file" name="epubfile">
+                <p class="help-block">Upload a (valid) EPUB file and click "Submit"</p>
+                <p class="help-block bg-danger "><span class="text-warning"><strong>Please note</strong>: this website <em>does not</em> store your uploaded file anywhere once the request is completed (I have no interest in keeping them, and even if I wanted to, the Heroku ephemeral file system makes it hard to do). See the <a href="https://www.github.com/gabalese/tweet-a-book">code</a>.</span></p>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
     </div>
-    <button type="submit" class="btn btn-default">Submit</button>
-</form>
 {% endblock %}

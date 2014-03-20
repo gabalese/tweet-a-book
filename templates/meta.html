@@ -10,14 +10,17 @@
     {% endblock %}
 </head>
 <body>
+<div class="wrapper">
 <div class="container">
 <div class="page-header">
     {% block PageHeader %}
-        <h1>Tweet-A-Book
-            <small>A cute utility to find tweetable sentences inside an EPUB publication</small>
+        <h1>Tweet-A-Book<br/>
+            <small>A little webapp to find tweetable sentences inside an EPUB publication</small>
         </h1>
     {% endblock %}
 </div>
+</div>
+<div class="container">
     {% block Content %}
     {% endblock %}
 </div>
@@ -25,9 +28,13 @@
 <div class="container">
 <hr>
     {% block Footer %}
-        <p>© Gabriele Alese</p>
+        <p>© 2014 Gabriele Alese – <a href="https://twitter.com/gabalese">@gabalese</a> – <a href="http://www.alese.it">www.alese.it</a></p>
     {% endblock %}
 </div>
 </footer>
+</div>
+<a href="https://github.com/gabalese/tweet-a-book"><img
+        style="position: absolute; top: 0; right: 0; border: 0; width: 149px; height: 149px;"
+        src="http://aral.github.com/fork-me-on-github-retina-ribbons/right-orange@2x.png" alt="Fork me on GitHub"></a>
 </body>
 </html>
