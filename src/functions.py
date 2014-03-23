@@ -1,3 +1,4 @@
+# coding=utf-8
 import re
 import os
 
@@ -45,7 +46,7 @@ def tokenize(line):
     *Very* rough, but works. Breaks on acronyms and stuff.
     """
     from settings import MIN_LENGTH, MAX_LENGTH  # Lazy import
-    rephrase = re.compile(r'(?<!\w\s)[A-Z].{%d,%d}[!\?\.]' % (MIN_LENGTH, MAX_LENGTH))
+    rephrase = re.compile(ur'(?<!\w\s)[«|A-Z].{%d,%d}[!\?\.]' % (MIN_LENGTH, MAX_LENGTH), re.UNICODE)
     tokens = rephrase.findall(line)
     return tokens
 
@@ -55,7 +56,7 @@ def extract_tweets(epubfile):
     for k in epubfile.manifest:
         if k.attrib["media-type"] == "application/xhtml+xml":
             plaintext = html_to_text(epubfile.read(os.path.join(os.path.dirname(epubfile.opf_path), k.attrib["href"])))
-            tokens = tokenize(plaintext)
+            tokens = tokenize(plaintext.decode("UTF-8"))
             if len(tokens) > 0:
                 listtokens.extend(tokens)
     return listtokens

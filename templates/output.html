@@ -8,10 +8,10 @@
         {% for tweet in tweets %}
         <tr>
             <td>
-                <p>{{ tweet.decode('UTF-8') }}</p>
+                <p>{{ tweet }}</p>
             </td>
             <td>
-                <a href="https://twitter.com/intent/tweet?text={{ '"'+tweet.decode('UTF-8')+'"' | urlencode }}">
+                <a href="https://twitter.com/intent/tweet?text={{ '"'+tweet+'"' | urlencode }}">
                 <button>
                 <img src="https://dev.twitter.com/sites/default/files/images_documentation/bird_blue_16_1.png"/>
                 </button>
