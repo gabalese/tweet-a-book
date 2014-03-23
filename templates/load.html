@@ -10,19 +10,37 @@
                 <p class="help-block">Upload a (valid) EPUB file and click "Submit"</p>
                 <p class="help-block bg-danger "><span class="text-warning"><strong>Please note</strong>: this website <em>does not</em> store your uploaded file anywhere once the request is completed (I have no interest in keeping them, and even if I wanted to, the Heroku ephemeral file system makes it hard to do). See the <a href="https://www.github.com/gabalese/tweet-a-book">code</a>.</span></p>
             </div>
+            <div><a id="showOptions">More options...</a></div>
+            <div class="form-group hide" id="form_options">
             <div class="form-group">
-                <label for="keywords">(Optional) list of filter keywords (space separated):</label>
-                <input type="text" name="keywords" class="form-control">
+                <label for="keywords">(Optional) list of filter keywords:</label>
+                <input id="keywords" type="text" name="keywords" class="form-control">
+                <p class="help-block">(Space separated)</p>
             </div>
             <div class="controls">
-                <label for="all">Search for any keywords
-                <input type="radio" id="any" name="option" value="any" checked>
-                </label>
-                <label for="any">Search for all keywords
-                <input type="radio" id="all" name="option" value="all">
-                </label>
+                <label for="all">Search for any keyword</label>
+                <input type="radio" id="any" name="option" value="any" checked><br/>
+                <label for="any">Search for all keywords</label>
+                <input type="radio" id="all" name="option" value="all"><br/>
+                <label for="partial">Allow partial keyword match?</label>
+                <input id="partial" name="partial" type="checkbox" value="yes">
+            </div>
+            <div>
+                <hr>
+            </div>
+            <div class="form-group controls">
+                <label for="minimum">Minimum tweet length</label>
+                <input id="minimum" type="text" name="minimum" value="100" class="form-control">
+                <label for="maximum">Maximum tweet length</label>
+                <input id="maximum" type="text" name="maximum" value="140" class="form-control">
+            </div>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Submit</button>
         </form>
+    <script>
+        $("#showOptions").on("click",function(){
+            $("#form_options").toggleClass('hide')
+        });
+    </script>
     </div>
 {% endblock %}

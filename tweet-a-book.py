@@ -7,6 +7,7 @@ from markupsafe import Markup
 
 from src.epub import InvalidEpub, EPUB
 from src.functions import extract_tweets
+import src.settings
 
 from xml.etree.ElementTree import ParseError
 
@@ -30,10 +31,20 @@ def main_view():
 
 @app.route('/post', methods=["GET", "POST"])
 def find_tweets():
+
     if request.method == "GET":
         return render_template('load.html')
 
     if request.method == "POST":
+        try:
+            min_length = request.form.get("minimum", None)
+            max_length = request.form.get("maximum", None)
+            if min_length and max_length:
+                src.settings.MAX_LENGTH = int(max_length)
+                src.settings.MIN_LENGTH = int(min_length)
+        except ValueError:
+            pass
+
         try:
             requestfile = request.files["epubfile"]
             temporary = StringIO()
@@ -47,12 +58,18 @@ def find_tweets():
             return make_response("Invalid EPUB", 403)
 
         keywords = request.form["keywords"].encode("UTF-8").split()
-        option = request.form["option"]
+        option = request.form.get("option", None)
+
+        partial = True if request.form.get("partial", None) == "yes" else False
 
         if len(keywords) > 0 and option == "any":
-            tweets_list = filter(lambda x: any(k.lower() in x.lower() for k in keywords), tweets_list)
+            tweets_list = filter(
+                lambda x: any(k.lower() in (x.lower() if partial else x.lower().split()) for k in keywords),
+                tweets_list)
         if len(keywords) > 0 and option == "all":
-            tweets_list = filter(lambda x: all(k.lower() in x.lower() for k in keywords), tweets_list)
+            tweets_list = filter(
+                lambda x: any(k.lower() in (x.lower() if partial else x.lower().split()) for k in keywords),
+                tweets_list)
 
         return render_template("output.html", tweets=tweets_list, title=epubfile.title, author=epubfile.author)
 

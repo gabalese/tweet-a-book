@@ -1,10 +1,6 @@
 import re
 import os
 
-# Basic settings for maximum and minimum lenght of a tweetable sentence.
-MAX_LENGHT = 140
-MIN_LENGHT = 100
-
 
 def html_to_text(data):
     """
@@ -48,7 +44,8 @@ def tokenize(line):
     The "sentence" is blatantly defined as "begins with a uppercase letter, goes on until the first full stop".
     *Very* rough, but works. Breaks on acronyms and stuff.
     """
-    rephrase = re.compile(r'(?<!\w\s)[A-Z].{%d,%d}[!\?\.]' % (MIN_LENGHT, MAX_LENGHT))
+    from settings import MIN_LENGTH, MAX_LENGTH  # Lazy import
+    rephrase = re.compile(r'(?<!\w\s)[A-Z].{%d,%d}[!\?\.]' % (MIN_LENGTH, MAX_LENGTH))
     tokens = rephrase.findall(line)
     return tokens
 
