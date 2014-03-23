@@ -68,7 +68,7 @@ def find_tweets():
                 tweets_list)
         if len(keywords) > 0 and option == "all":
             tweets_list = filter(
-                lambda x: any(k.lower() in (x.lower() if partial else x.lower().split()) for k in keywords),
+                lambda x: all(k.lower() in (x.lower() if partial else x.lower().split()) for k in keywords),
                 tweets_list)
 
         return render_template("output.html", tweets=tweets_list, title=epubfile.title, author=epubfile.author)
