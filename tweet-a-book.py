@@ -45,6 +45,15 @@ def find_tweets():
             tweets_list = extract_tweets(epubfile)
         except (InvalidEpub, ParseError):
             return make_response("Invalid EPUB", 403)
+
+        keywords = request.form["keywords"].encode("UTF-8").split()
+        option = request.form["option"]
+
+        if len(keywords) > 0 and option == "any":
+            tweets_list = filter(lambda x: any(k.lower() in x.lower() for k in keywords), tweets_list)
+        if len(keywords) > 0 and option == "all":
+            tweets_list = filter(lambda x: all(k.lower() in x.lower() for k in keywords), tweets_list)
+
         return render_template("output.html", tweets=tweets_list, title=epubfile.title, author=epubfile.author)
 
 
